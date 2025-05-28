@@ -18,10 +18,6 @@ Your task is to extend the current funcitonality and implement new features and 
 - Optional:
   - Re-create the project as a Nextjs Project.
 
-## Time
-
-We don't expect you to spend more than 8 hours on this test. If you are under time constraints, complete the tasks you started and we can discuss the rest in the interview.
-
 ## Required technologies
 
 - [node v16](https://nodejs.org/en/download/releases).
