@@ -13,9 +13,9 @@ Your task is to extend the current funcitonality and implement new features and 
   - Display all employees
   - Edit/Delete
   - Functions that might be useful when viewing potentially large lists of data (Pagination, Filters, Search)
-- Optional:
   - Creative flare - enhance the application's styling
   - Setup a basic backend service to fetch the data and initialize the context
+- Optional:
   - Re-create the project as a Nextjs Project.
 
 ## Time
