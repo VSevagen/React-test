@@ -17,6 +17,11 @@ const formValidationSchema = yup.object().shape({
     .max(255, "The maximum number of characters is 255")
     .email("Invalid email address")
     .required("Required"),
+  birthDate: yup
+    .string()
+    .trim()
+    .matches(/\d{4}-\d{2}-\d{2}/, "Date should be in YYYY-MM-DD format")
+    .required("Required"),
 });
 
 export default formValidationSchema;

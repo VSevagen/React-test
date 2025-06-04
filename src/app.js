@@ -1,10 +1,10 @@
 import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import WebFont from "webfontloader";
-import Overview from "../Overview";
-import Create from "../Create";
-import View from "../View";
-import { AppWrapper, GlobalStyle } from "../styled";
+import { AppWrapper, GlobalStyle } from "./components/styled";
+import Overview from "./pages/overview";
+import Create from "./pages/create";
+import View from "./pages/view";
 
 WebFont.load({
   google: {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router";
-import { Box, Button, Flex, Header } from "../styled";
+import { Box, Button, Flex, Header } from "../components/styled";
 
 const View = () => {
   const history = useHistory();

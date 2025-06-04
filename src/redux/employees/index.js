@@ -27,6 +27,7 @@ const employeeSlice = createSlice({
           ...draftState.employees_records,
           action.payload,
         ];
+        console.log(draftState.employees_records);
       },
     },
   },
