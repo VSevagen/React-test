@@ -49,10 +49,19 @@ const employeeSlice = createSlice({
         return employee;
       });
     },
+    deleteEmployee(state, action) {
+      state.employeesRecords = state.employeesRecords.filter(
+        employee => employee.id !== action.payload
+      );
+    },
   },
 });
 
-export const { saveNewEmployee, setEmployeeRecord, editEmployee } =
-  employeeSlice.actions;
+export const {
+  saveNewEmployee,
+  setEmployeeRecord,
+  editEmployee,
+  deleteEmployee,
+} = employeeSlice.actions;
 
 export default employeeSlice.reducer;

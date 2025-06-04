@@ -74,7 +74,9 @@ const Table = ({ columns, data }) => {
             ))
           ) : (
             <tr>
-              <td colSpan={columns.length}>No data found</td>
+              <td colSpan={columns.length} style={{ textAlign: "center" }}>
+                No data found
+              </td>
             </tr>
           )}
         </tbody>
