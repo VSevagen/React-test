@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 
 const defaultEmployee = {
@@ -11,7 +12,7 @@ const defaultEmployee = {
 };
 
 const initialState = {
-  employees_records: [defaultEmployee],
+  employeesRecords: [defaultEmployee],
 };
 
 const employeeSlice = createSlice({
@@ -23,12 +24,26 @@ const employeeSlice = createSlice({
         payload: { ...employee, id: new Date().getTime() },
       }),
       reducer(draftState, action) {
-        draftState.employees_records = [
-          ...draftState.employees_records,
+        draftState.employeesRecords = [
+          ...draftState.employeesRecords,
           action.payload,
         ];
-        console.log(draftState.employees_records);
       },
+    },
+    editEmployee(state, action) {
+      const newEmployeeData = action.payload;
+      state.employeesRecords = state.employeesRecords.map(employee => {
+        if (newEmployeeData.id === employee.id) {
+          employee.firstName = newEmployeeData.firstName;
+          employee.surname = newEmployeeData.surname;
+          employee.email = newEmployeeData.email;
+          employee.birthDate = newEmployeeData.birthDate;
+          employee.jobTitle = newEmployeeData.jobTitle;
+          employee.status = newEmployeeData.status;
+        }
+
+        return employee;
+      });
     },
   },
 });

@@ -5,6 +5,7 @@ import { AppWrapper, GlobalStyle } from "./components/styled";
 import Overview from "./pages/overview";
 import Create from "./pages/create";
 import View from "./pages/view";
+import Edit from "./pages/edit";
 
 WebFont.load({
   google: {
@@ -18,6 +19,7 @@ const App = () => {
       <AppWrapper>
         <Switch>
           <Route path="/create" component={Create} />
+          <Route path="/edit/:id" component={Edit} />
           <Route path="/view" component={View} />
           <Route path="/" component={Overview} />
         </Switch>

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { margin, padding, state } from "./utils";
 import theme from "./defaultTheme";
+import { margin, padding, state } from "./utils";
 
 const Button = styled.button`
   ${margin};
@@ -76,6 +76,13 @@ const Button = styled.button`
     `
      background-color: ${theme.buttons.secondaryBackground};
      color: ${theme.buttons.secondaryText};
+  `}
+  
+  ${({ danger }) =>
+    danger &&
+    `
+     background-color: ${theme.buttons.danger};
+     color: ${theme.buttons.dangerText};
   `}
 
   ${({ minWidth }) => minWidth && `min-width: ${minWidth}px;`}
