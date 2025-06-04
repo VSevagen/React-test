@@ -1,9 +1,11 @@
 import React from "react";
 import { Formik } from "formik";
 import { Flex } from "../styled";
-import FormField from "./FormField";
-import FormButtons from "./FormButtons";
+import FormField from "../Form/FormField";
+import FormButtons from "../Form/FormButtons";
 import formValidationSchema from "./formValidationSchema";
+import FormSelect from "../Form/FormSelect";
+import { employeeStatus } from "../../constants";
 
 /**
  * Make the form reusable,
@@ -14,7 +16,7 @@ import formValidationSchema from "./formValidationSchema";
  * @param {Object} initialValues
  * @returns
  */
-const UserForm = ({ submit, initialValues = {} }) => {
+const EmployeeForm = ({ submit, initialValues = {} }) => {
   return (
     <Formik
       validationSchema={formValidationSchema}
@@ -24,14 +26,22 @@ const UserForm = ({ submit, initialValues = {} }) => {
         surname: initialValues.surname ?? "",
         email: initialValues.email ?? "",
         birthDate: initialValues.birthDate ?? "",
+        status: initialValues.status ?? "",
+        jobTitle: initialValues.jobTitle ?? "",
       }}
     >
       <Flex alignItems="center" justifyContent="center" height="100%">
         <Flex alignItems="left" direction="column" width="300px">
+          <FormField name="jobTitle" placeholder="Job title" />
           <FormField name="firstName" placeholder="First name" />
           <FormField name="surname" placeholder="Surname" />
           <FormField name="email" placeholder="Email" />
           <FormField name="birthDate" placeholder="Birth date (YYYY-MM-DD)" />
+          <FormSelect
+            name="status"
+            placeholder="Status"
+            options={employeeStatus.map(o => ({ value: o, label: o }))}
+          />
           <FormButtons />
         </Flex>
       </Flex>
@@ -39,4 +49,4 @@ const UserForm = ({ submit, initialValues = {} }) => {
   );
 };
 
-export default UserForm;
+export default EmployeeForm;

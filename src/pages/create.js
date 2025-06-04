@@ -1,22 +1,27 @@
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import EmployeeForm from "../components/EmployeeForm";
 import { Header } from "../components/styled";
-import UserForm from "../components/UserForm";
 import { saveNewEmployee } from "../redux/employees";
 
 const Create = () => {
   const dispatch = useDispatch();
+
+  const history = useHistory();
+
   const submitForm = useCallback(
     employee => {
       dispatch(saveNewEmployee(employee));
+      history.push("/view");
     },
-    [dispatch]
+    [dispatch, history]
   );
 
   return (
     <>
       <Header>Create new employee</Header>
-      <UserForm submit={submitForm} />
+      <EmployeeForm submit={submitForm} />
     </>
   );
 };

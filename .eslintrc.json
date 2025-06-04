@@ -51,6 +51,7 @@
         "exports": "ignore",
         "functions": "ignore"
       }
-    ]
+    ],
+    "import/prefer-default-export": "off"
   }
 }

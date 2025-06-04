@@ -22,6 +22,12 @@ const formValidationSchema = yup.object().shape({
     .trim()
     .matches(/\d{4}-\d{2}-\d{2}/, "Date should be in YYYY-MM-DD format")
     .required("Required"),
+  jobTitle: yup
+    .string()
+    .trim()
+    .max(255, "The maximum number of characters is 255")
+    .required("Required"),
+  status: yup.string().required("Required"),
 });
 
 export default formValidationSchema;
