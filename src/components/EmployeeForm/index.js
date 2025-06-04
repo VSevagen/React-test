@@ -1,11 +1,11 @@
-import React from "react";
 import { Formik } from "formik";
-import { Flex } from "../styled";
-import FormField from "../Form/FormField";
-import FormButtons from "../Form/FormButtons";
-import formValidationSchema from "./formValidationSchema";
-import FormSelect from "../Form/FormSelect";
+import React from "react";
 import { employeeStatus } from "../../constants";
+import FormButtons from "../Form/FormButtons";
+import FormField from "../Form/FormField";
+import FormSelect from "../Form/FormSelect";
+import { Flex } from "../styled";
+import formValidationSchema from "./formValidationSchema";
 
 /**
  * Make the form reusable,
@@ -21,6 +21,7 @@ const EmployeeForm = ({ submit, initialValues = {} }) => {
     <Formik
       validationSchema={formValidationSchema}
       onSubmit={submit}
+      enableReinitialize
       initialValues={{
         firstName: initialValues.firstName ?? "",
         surname: initialValues.surname ?? "",

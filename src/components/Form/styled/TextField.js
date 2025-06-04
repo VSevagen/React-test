@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { detectValue, display, margin, padding } from "../../styled/utils";
 import theme from "../../styled/defaultTheme";
+import { detectValue, display, margin, padding } from "../../styled/utils";
 
 const TextField = styled.input`
   width: 100%;
@@ -9,7 +9,7 @@ const TextField = styled.input`
   max-width: ${({ width }) => detectValue(width)};
   padding: ${theme.spacings.xs};
   padding-left: 10px;
-  min-height: 2rem;
+  height: 35px;
   border-radius: 10px;
   transition: border-color 0.2s linear;
 

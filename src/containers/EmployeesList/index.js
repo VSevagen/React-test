@@ -4,6 +4,11 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Table from "../../components/Table";
 import { employeeTableColumns } from "./config";
 
+/**
+ * List of employees
+ *
+ * @returns
+ */
 const EmployeesList = () => {
   const history = useHistory();
 
@@ -11,8 +16,8 @@ const EmployeesList = () => {
     return employees;
   });
 
-  const handleEdit = id => {
-    history.push(`/edit/${id}`);
+  const handleEdit = employee => {
+    history.push(`/edit/${employee.id}`);
   };
   const handleRemove = () => {};
 

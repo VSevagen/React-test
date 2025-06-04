@@ -1,11 +1,48 @@
-import React from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
+import { Route, HashRouter as Router, Switch } from "react-router-dom";
 import WebFont from "webfontloader";
 import { AppWrapper, GlobalStyle } from "./components/styled";
-import Overview from "./pages/overview";
-import Create from "./pages/create";
-import View from "./pages/view";
-import Edit from "./pages/edit";
+
+const Overview = lazy(() => import("./pages/overview"));
+const Create = lazy(() => import("./pages/create"));
+const View = lazy(() => import("./pages/view"));
+const Edit = lazy(() => import("./pages/edit"));
+
+// Lazy loading our routes
+const routes = [
+  {
+    path: "/create",
+    component: () => (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Create />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/edit/:id",
+    component: () => (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Edit />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/view",
+    component: () => (
+      <Suspense fallback={<div>Loading...</div>}>
+        <View />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/",
+    component: () => (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Overview />
+      </Suspense>
+    ),
+  },
+];
 
 WebFont.load({
   google: {
@@ -18,10 +55,13 @@ const App = () => {
     <Router>
       <AppWrapper>
         <Switch>
-          <Route path="/create" component={Create} />
-          <Route path="/edit/:id" component={Edit} />
-          <Route path="/view" component={View} />
-          <Route path="/" component={Overview} />
+          {routes.map(route => (
+            <Route
+              key={route.path}
+              path={route.path}
+              component={route.component}
+            />
+          ))}
         </Switch>
       </AppWrapper>
       <GlobalStyle />

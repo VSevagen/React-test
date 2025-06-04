@@ -13,12 +13,18 @@ const defaultEmployee = {
 
 const initialState = {
   employeesRecords: [defaultEmployee],
+  employeeRecord: {},
 };
 
 const employeeSlice = createSlice({
   name: "employees",
   initialState,
   reducers: {
+    setEmployeeRecord: (state, action) => {
+      state.employeeRecord = state.employeesRecords.find(employee => {
+        return employee.id === action.payload;
+      });
+    },
     saveNewEmployee: {
       prepare: employee => ({
         payload: { ...employee, id: new Date().getTime() },
@@ -34,12 +40,10 @@ const employeeSlice = createSlice({
       const newEmployeeData = action.payload;
       state.employeesRecords = state.employeesRecords.map(employee => {
         if (newEmployeeData.id === employee.id) {
-          employee.firstName = newEmployeeData.firstName;
-          employee.surname = newEmployeeData.surname;
-          employee.email = newEmployeeData.email;
-          employee.birthDate = newEmployeeData.birthDate;
-          employee.jobTitle = newEmployeeData.jobTitle;
-          employee.status = newEmployeeData.status;
+          return {
+            ...employee,
+            ...newEmployeeData,
+          };
         }
 
         return employee;
@@ -48,6 +52,7 @@ const employeeSlice = createSlice({
   },
 });
 
-export const { saveNewEmployee } = employeeSlice.actions;
+export const { saveNewEmployee, setEmployeeRecord, editEmployee } =
+  employeeSlice.actions;
 
 export default employeeSlice.reducer;

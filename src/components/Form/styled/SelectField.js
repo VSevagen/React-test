@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { detectValue, display, margin, padding } from "../../styled/utils";
 import theme from "../../styled/defaultTheme";
+import { detectValue, display, margin, padding } from "../../styled/utils";
 
 const SelectField = styled.select`
   width: 100%;
@@ -15,6 +15,7 @@ const SelectField = styled.select`
   transition: border-color 0.2s linear;
   padding-top: 5px;
   padding-bottom: 5px;
+  height: 35px;
 
   &::placeholder {
     color: ${theme.colors.placeholder};

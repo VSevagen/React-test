@@ -9,6 +9,10 @@ const TableStyled = styled.table`
   td,
   th {
     padding: 10px;
+    min-width: 150px;
+    @media (min-width: 992px) {
+      min-width: 0;
+    }
   }
   tbody tr {
     &:nth-child(odd) {

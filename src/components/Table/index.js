@@ -1,5 +1,6 @@
 import React from "react";
 import TableStyled from "./styled/TableStyled";
+import TableWrap from "./styled/TableWrap";
 
 /**
  * Table component
@@ -51,32 +52,34 @@ import TableStyled from "./styled/TableStyled";
  */
 const Table = ({ columns, data }) => {
   return (
-    <TableStyled>
-      <thead>
-        <tr>
-          {columns.map((c, index) => (
-            <th key={`th-${index}`}>{c.title}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data?.length ? (
-          data?.map((d, index) => (
-            <tr key={`tr-${index}`}>
-              {columns.map((c, cIndex) => (
-                <td key={`td-${cIndex}`}>
-                  {c.render(d[c.dataIndex], d, index)}
-                </td>
-              ))}
-            </tr>
-          ))
-        ) : (
+    <TableWrap>
+      <TableStyled>
+        <thead>
           <tr>
-            <td colSpan={columns.length}>No data found</td>
+            {columns.map((c, index) => (
+              <th key={`th-${index}`}>{c.title}</th>
+            ))}
           </tr>
-        )}
-      </tbody>
-    </TableStyled>
+        </thead>
+        <tbody>
+          {data?.length ? (
+            data?.map((d, index) => (
+              <tr key={`tr-${index}`}>
+                {columns.map((c, cIndex) => (
+                  <td key={`td-${cIndex}`}>
+                    {c.render(d[c.dataIndex], d, index)}
+                  </td>
+                ))}
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={columns.length}>No data found</td>
+            </tr>
+          )}
+        </tbody>
+      </TableStyled>
+    </TableWrap>
   );
 };
 

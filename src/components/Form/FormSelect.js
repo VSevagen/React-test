@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { Field, useFormikContext } from "formik";
-import ErrorMessage from "./styled/ErrorMessage";
+import React, { useState } from "react";
 import { Box } from "../styled";
+import ErrorMessage from "./styled/ErrorMessage";
 import SelectField from "./styled/SelectField";
 
 const FormSelect = ({ name, options = [], placeholder = "" }) => {
@@ -21,7 +21,7 @@ const FormSelect = ({ name, options = [], placeholder = "" }) => {
             data-cy={`${name}!Select`}
             fontSize="lg"
             fluid
-            selected={selected}
+            selected={selected || field.value !== ""}
             error={meta.error && meta.touched}
             {...field}
             onChange={e => {

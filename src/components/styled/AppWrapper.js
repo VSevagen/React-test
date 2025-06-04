@@ -13,7 +13,7 @@ const AppWrapper = styled.div`
   margin-inline: 16px;
   padding-inline: 16px;
   @media (min-width: 992px) {
-    max-width: 850px;
+    max-width: 960px;
     margin-inline: auto;
   }
 `;

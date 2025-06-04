@@ -64,10 +64,12 @@ export const employeeTableColumns = (onEdit, onRemove) => [
       return (
         <Flex>
           <Box>
-            <Button onClick={() => onEdit(record.id)}>Edit</Button>
+            <Button minWidth="0" onClick={() => onEdit(record)}>
+              Edit
+            </Button>
           </Box>
           <Box marginLeft="1rem">
-            <Button danger onClick={() => onRemove(record.id)}>
+            <Button minWidth="0" danger onClick={() => onRemove(record.id)}>
               Delete
             </Button>
           </Box>
