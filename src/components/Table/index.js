@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { MAX_ITEMS_PER_PAGE } from "../../constants";
 import usePagination from "../../hooks/usePagination";
 import useSort from "../../hooks/useSort";
-import { Box, Button, Flex } from "../styled";
+import { Box, Flex } from "../styled";
+import Pagination from "./Pagination";
 import SortTable from "./SortTable";
 import TableStyled from "./styled/TableStyled";
 import TableWrap from "./styled/TableWrap";
@@ -70,9 +71,15 @@ const Table = ({ columns, data, pagination = true, defaultSort = "asc" }) => {
   } = usePagination(sortedData, MAX_ITEMS_PER_PAGE);
 
   // set records
+  // If pagination is true && we have a greater than MAX_ITEMS_PER_PAGE
+  // We use paginatedData
+  // Otherwise we use the original data
   const records = useMemo(
-    () => (pagination ? paginatedData : data),
-    [data, pagination, paginatedData]
+    () =>
+      pagination && sortedData.length > MAX_ITEMS_PER_PAGE
+        ? paginatedData
+        : data,
+    [data, pagination, paginatedData, sortedData]
   );
 
   const handleSort = column => {
@@ -83,6 +90,8 @@ const Table = ({ columns, data, pagination = true, defaultSort = "asc" }) => {
       onSort(column.dataIndex, direction);
       return direction;
     });
+
+    // change sortBy
     setSortBy(column.dataIndex);
   };
 
@@ -135,28 +144,19 @@ const Table = ({ columns, data, pagination = true, defaultSort = "asc" }) => {
           )}
         </tbody>
       </TableStyled>
-      {pagination && data?.length > MAX_ITEMS_PER_PAGE && (
-        <Flex justifyContent="flex-end" marginTop="2rem">
-          <Box>
-            <Button
-              type="button"
-              onClick={onPrevPage}
-              disabled={isDisabledPrev}
-            >
-              &lt;&lt;
-            </Button>
-          </Box>
-          <Box marginLeft="1rem">
-            <Button
-              type="button"
-              onClick={onNextPage}
-              disabled={isDisabledNext}
-            >
-              &gt;&gt;
-            </Button>
-          </Box>
-        </Flex>
-      )}
+      <Flex justifyContent="space-between" marginTop="2rem">
+        <Box>
+          <span>Total item(s): {sortedData.length}</span>
+        </Box>
+        {pagination && sortedData?.length > MAX_ITEMS_PER_PAGE && (
+          <Pagination
+            onPrevPage={onPrevPage}
+            onNextPage={onNextPage}
+            isDisabledPrev={isDisabledPrev}
+            isDisabledNext={isDisabledNext}
+          />
+        )}
+      </Flex>
     </TableWrap>
   );
 };
