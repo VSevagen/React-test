@@ -33,7 +33,6 @@ const EmployeeForm = ({ submit, initialValues = {} }) => {
     >
       <Flex alignItems="center" justifyContent="center" height="100%">
         <Flex alignItems="left" direction="column" width="300px">
-          <FormField name="jobTitle" placeholder="Job title" />
           <FormField name="firstName" placeholder="First name" />
           <FormField name="surname" placeholder="Surname" />
           <FormField name="email" placeholder="Email" />
@@ -43,6 +42,7 @@ const EmployeeForm = ({ submit, initialValues = {} }) => {
             placeholder="Status"
             options={employeeStatus.map(o => ({ value: o, label: o }))}
           />
+          <FormField name="jobTitle" placeholder="Job title" />
           <FormButtons />
         </Flex>
       </Flex>

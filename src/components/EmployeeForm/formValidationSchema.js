@@ -19,6 +19,11 @@ const formValidationSchema = yup.object().shape({
     .required("Required"),
   birthDate: yup
     .string()
+    .test(
+      "birthDate",
+      "Invalid birthDate",
+      dateString => new Date(dateString).toString() !== "Invalid Date"
+    )
     .trim()
     .matches(/\d{4}-\d{2}-\d{2}/, "Date should be in YYYY-MM-DD format")
     .required("Required"),
