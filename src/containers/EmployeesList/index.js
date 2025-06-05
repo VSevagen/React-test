@@ -31,10 +31,18 @@ const EmployeesList = () => {
   const mutation = useMutation({
     mutationFn: id => deleteEmployee(id),
     onSettled: () => {
-      queryClient.invalidateQueries({
-        predicate: query => query.queryKey[0] === "employees",
-        refetchType: "active",
-      });
+      // This timeout is usefull
+      // because, the queryClient.invalidateQueries
+      // is invoked before the mutation
+      // so, we need to wait a little bit
+      setTimeout(
+        () =>
+          queryClient.invalidateQueries({
+            predicate: query => query.queryKey[0] === "employees",
+            refetchType: "active",
+          }),
+        100
+      );
       setOpen(false);
     },
   });
