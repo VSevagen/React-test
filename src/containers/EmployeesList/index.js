@@ -1,9 +1,13 @@
+import { debounce } from "lodash";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import TextField from "../../components/Form/styled/TextField";
 import Modal from "../../components/Modal";
 import { Box, Button, Flex } from "../../components/styled";
 import Table from "../../components/Table";
+import useSearch from "../../hooks/useSearch";
+import useSort from "../../hooks/useSort";
 import { useModal } from "../../providers/modalProvider";
 import { deleteEmployee } from "../../redux/employees";
 import { employeeTableColumns } from "./config";
@@ -18,12 +22,16 @@ const EmployeesList = () => {
 
   const history = useHistory();
   const { setOpen } = useModal();
-
   const dispatch = useDispatch();
 
-  const { employeesRecords: data } = useSelector(({ employees }) => {
+  const { employeesRecords } = useSelector(({ employees }) => {
     return employees;
   });
+
+  const { results: employeesSearchResult, onSearch } =
+    useSearch(employeesRecords);
+
+  const { sortedData, onSort } = useSort(employeesSearchResult);
 
   const handleEdit = employee => {
     history.push(`/edit/${employee.id}`);
@@ -39,11 +47,21 @@ const EmployeesList = () => {
     setOpen(false);
   };
 
+  const handleSearch = e => {
+    onSearch(e.target.value);
+  };
+
   return (
     <>
+      <TextField
+        onChange={debounce(handleSearch, 500)}
+        name="search"
+        placeholder="Search"
+      />
       <Table
         columns={employeeTableColumns(handleEdit, handleRemove)}
-        data={data}
+        data={sortedData}
+        onSort={onSort}
       />
       <Modal title="Confirmation">
         <p>Do you want to delete this employee?</p>

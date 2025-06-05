@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { display, padding, margin, height, flex, state, width } from "./utils";
+import { display, flex, height, margin, padding, state, width } from "./utils";
 
 export default styled.div`
   ${display}
@@ -10,6 +10,7 @@ export default styled.div`
   ${width}
   ${height}
 
+  position: relative;
   display: flex;
   min-width: 0;
 `;

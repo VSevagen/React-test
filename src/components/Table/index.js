@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Flex } from "../styled";
+import SortTable from "./SortTable";
 import TableStyled from "./styled/TableStyled";
 import TableWrap from "./styled/TableWrap";
 
@@ -50,14 +52,47 @@ import TableWrap from "./styled/TableWrap";
  * @param {Array} data
  * @returns
  */
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, onSort }) => {
+  const [sortDirection, setSortDirection] = useState("asc");
+  const [sortBy, setSortBy] = useState(columns[0].dataIndex);
+
+  const handleSort = column => {
+    // Set sort direction
+    // and call onSort
+    setSortDirection(prev => {
+      const direction = prev === "asc" ? "desc" : "asc";
+      onSort(column.dataIndex, direction);
+      return direction;
+    });
+    setSortBy(column.dataIndex);
+  };
+
+  useEffect(() => {
+    // Apply default sort
+    onSort(columns[0].dataIndex, "asc");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <TableWrap>
       <TableStyled>
         <thead>
           <tr>
             {columns.map((c, index) => (
-              <th key={`th-${index}`}>{c.title}</th>
+              <th
+                key={`th-${index}`}
+                onClick={
+                  c.dataIndex !== "action" ? () => handleSort(c) : undefined
+                }
+                style={c.dataIndex !== "action" ? { cursor: "pointer" } : {}}
+              >
+                <Flex alignItems="center">
+                  {c.title}
+                  {sortBy === c.dataIndex && (
+                    <SortTable direction={sortDirection} />
+                  )}
+                </Flex>
+              </th>
             ))}
           </tr>
         </thead>

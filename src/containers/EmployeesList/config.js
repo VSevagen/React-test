@@ -17,7 +17,7 @@ const status = {
 export const employeeTableColumns = (onEdit, onRemove) => [
   {
     dataIndex: "jobTitle",
-    title: "JobTitle",
+    title: "Job Title",
     render(value) {
       return <span>{value}</span>;
     },
