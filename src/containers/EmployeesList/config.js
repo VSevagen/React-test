@@ -1,4 +1,6 @@
 import React from "react";
+import Edit from "../../components/Icons/Edit";
+import Trash from "../../components/Icons/Trash";
 import { Box, Button, Flex } from "../../components/styled";
 import Tag from "../../components/styled/Tag";
 
@@ -76,13 +78,18 @@ export const employeeTableColumns = (onEdit, onRemove) => [
       return (
         <Flex>
           <Box>
-            <Button minWidth="0" onClick={() => onEdit(record)}>
-              Edit
+            <Button minWidth="0" onClick={() => onEdit(record)} icon>
+              <Edit />
             </Button>
           </Box>
           <Box marginLeft="1rem">
-            <Button minWidth="0" danger onClick={() => onRemove(record.id)}>
-              Delete
+            <Button
+              minWidth="0"
+              danger
+              onClick={() => onRemove(record.id)}
+              icon
+            >
+              <Trash />
             </Button>
           </Box>
         </Flex>

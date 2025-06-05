@@ -53,7 +53,7 @@ const EmployeesList = () => {
       <TextField
         onChange={debounce(handleSearch, 500)}
         name="search"
-        placeholder="Search"
+        placeholder="Search by Job Title, Firstname, surname, Email, Birth date, Status"
       />
       <Table
         columns={employeeTableColumns(handleEdit, handleRemove)}

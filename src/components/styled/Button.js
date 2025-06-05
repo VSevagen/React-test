@@ -90,6 +90,12 @@ const Button = styled.button`
 
   ${({ minWidth }) => minWidth && `min-width: ${minWidth}px;`}
   ${({ autoWidth }) => autoWidth && `min-width: auto!important;`}
+
+  ${({ icon, danger }) =>
+    icon &&
+    `display: flex; background: transparent; color: ${
+      danger ? theme.colors.danger : theme.colors.primary
+    }; min-width: 0; padding: 0`}
 `;
 
 Button.displayName = "StyledButton";
