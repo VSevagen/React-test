@@ -32,7 +32,8 @@ const EmployeesList = () => {
     mutationFn: id => deleteEmployee(id),
     onSettled: () => {
       // This timeout is usefull
-      // because, the queryClient.invalidateQueries
+      // because, for unknown reason
+      // the queryClient.invalidateQueries
       // is invoked before the mutation
       // so, we need to wait a little bit
       setTimeout(
