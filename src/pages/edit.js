@@ -1,42 +1,43 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+/* eslint-disable import/no-extraneous-dependencies */
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useCallback } from "react";
 import { useHistory, useParams } from "react-router";
 import EmployeeForm from "../components/EmployeeForm";
 import { Header } from "../components/styled";
-import { editEmployee, setEmployeeRecord } from "../redux/employees";
+import { editEmployee } from "../services/employeeMutations";
+import { getEmployee } from "../services/employeeQueries";
 
 const Edit = () => {
-  const dispatch = useDispatch();
-
   const history = useHistory();
-
-  const employeeRecord = useSelector(
-    ({ employees }) => employees.employeeRecord
-  );
 
   const params = useParams();
 
-  const submitForm = useCallback(
-    employee => {
-      dispatch(
-        editEmployee({
-          id: +params.id,
-          ...employee,
-        })
-      );
+  const queryClient = useQueryClient();
+
+  const { data: employee } = useQuery({
+    queryKey: ["employee", params.id],
+    queryFn: () => getEmployee(+params.id),
+  });
+
+  const mutation = useMutation({
+    mutationFn: newEmployee => editEmployee(+params.id, newEmployee),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["employees", ""]);
       history.push("/view");
     },
-    [dispatch, history, params]
-  );
+  });
 
-  useEffect(() => {
-    dispatch(setEmployeeRecord(+params.id));
-  }, [params, dispatch]);
+  const submitForm = useCallback(
+    newEmployee => {
+      mutation.mutate(newEmployee);
+    },
+    [mutation]
+  );
 
   return (
     <>
       <Header>Edit employee</Header>
-      <EmployeeForm submit={submitForm} initialValues={employeeRecord} />
+      <EmployeeForm submit={submitForm} initialValues={employee} />
     </>
   );
 };

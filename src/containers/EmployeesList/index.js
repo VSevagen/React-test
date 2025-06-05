@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,7 +10,7 @@ import { Box, Button, Flex } from "../../components/styled";
 import Table from "../../components/Table";
 import { useModal } from "../../providers/modalProvider";
 import { deleteEmployee } from "../../redux/employees";
-import useEmployeeQueries from "../../services/useEmployeeQueries";
+import { getAllEmployees } from "../../services/employeeQueries";
 import { employeeTableColumns } from "./config";
 
 /**
@@ -18,12 +20,11 @@ import { employeeTableColumns } from "./config";
  */
 const EmployeesList = () => {
   const [employeeId, setEmployeeId] = useState();
+  const [search, setSearch] = useState("");
 
   const history = useHistory();
   const { setOpen } = useModal();
   const dispatch = useDispatch();
-
-  const { data: employeesRecords, setSearch, isPending } = useEmployeeQueries();
 
   const handleEdit = employee => {
     history.push(`/edit/${employee.id}`);
@@ -43,6 +44,12 @@ const EmployeesList = () => {
     setSearch(e.target.value);
   };
 
+  const { data: employees = [], isPending } = useQuery({
+    queryKey: ["employees", search],
+    queryFn: () => getAllEmployees(search),
+    enabled: true,
+  });
+
   return (
     <>
       <TextField
@@ -57,7 +64,7 @@ const EmployeesList = () => {
       ) : (
         <Table
           columns={employeeTableColumns(handleEdit, handleRemove)}
-          data={employeesRecords}
+          data={employees}
           pagination
           defaultSort="desc"
         />
