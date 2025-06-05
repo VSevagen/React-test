@@ -30,8 +30,11 @@ const EmployeesList = () => {
   // invalidate employees after delete
   const mutation = useMutation({
     mutationFn: id => deleteEmployee(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["employees", ""]);
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        predicate: query => query.queryKey[0] === "employees",
+        refetchType: "active",
+      });
       setOpen(false);
     },
   });
@@ -50,7 +53,7 @@ const EmployeesList = () => {
   };
 
   const handleSearch = e => {
-    setSearch(e.target.value);
+    setSearch(e.target.value ?? "");
   };
 
   const { data: employees = [], isPending } = useQuery({
@@ -73,7 +76,7 @@ const EmployeesList = () => {
       ) : (
         <Table
           columns={employeeTableColumns(handleEdit, handleRemove)}
-          data={employees}
+          data={mutation.data || employees}
           pagination
           defaultSort="desc"
         />

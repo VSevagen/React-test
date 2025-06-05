@@ -75,11 +75,8 @@ const Table = ({ columns, data, pagination = true, defaultSort = "asc" }) => {
   // We use paginatedData
   // Otherwise we use the original data
   const records = useMemo(
-    () =>
-      pagination && sortedData.length > MAX_ITEMS_PER_PAGE
-        ? paginatedData
-        : data,
-    [data, pagination, paginatedData, sortedData]
+    () => (pagination ? paginatedData : data),
+    [data, pagination, paginatedData]
   );
 
   const handleSort = column => {

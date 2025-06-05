@@ -13,8 +13,10 @@ const Create = () => {
 
   const mutation = useMutation({
     mutationFn: employee => addEmployee(employee),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["employees", ""]);
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        predicate: query => query.queryKey[0] === "employees",
+      });
       history.push("/view");
     },
   });
