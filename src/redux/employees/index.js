@@ -21,18 +21,6 @@ const employeeSlice = createSlice({
   initialState,
   reducers: {
     /**
-     * Set current employee record
-     *
-     * Usefull for edit
-     * @param {*} state
-     * @param {*} action
-     */
-    setEmployeeRecord: (state, action) => {
-      state.employeeRecord = state.employeesRecords.find(employee => {
-        return employee.id === action.payload;
-      });
-    },
-    /**
      * Add new employee
      */
     saveNewEmployee: (draftState, action) => {
@@ -44,44 +32,9 @@ const employeeSlice = createSlice({
         },
       ];
     },
-    /**
-     * Edit employee,
-     *
-     * Find the current employee and replace with a new one
-     * @param {*} state
-     * @param {*} action
-     */
-    editEmployee(state, action) {
-      const newEmployeeData = action.payload;
-      state.employeesRecords = state.employeesRecords.map(employee => {
-        if (newEmployeeData.id === employee.id) {
-          return {
-            ...employee,
-            ...newEmployeeData,
-          };
-        }
-
-        return employee;
-      });
-    },
-    /**
-     * Delete employee by id
-     * @param {*} state
-     * @param {*} action
-     */
-    deleteEmployee(state, action) {
-      state.employeesRecords = state.employeesRecords.filter(
-        employee => employee.id !== action.payload
-      );
-    },
   },
 });
 
-export const {
-  saveNewEmployee,
-  setEmployeeRecord,
-  editEmployee,
-  deleteEmployee,
-} = employeeSlice.actions;
+export const { saveNewEmployee } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

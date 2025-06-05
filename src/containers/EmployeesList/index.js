@@ -1,15 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { debounce } from "lodash";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import TextField from "../../components/Form/styled/TextField";
 import Modal from "../../components/Modal";
 import { Box, Button, Flex } from "../../components/styled";
 import Table from "../../components/Table";
 import { useModal } from "../../providers/modalProvider";
-import { deleteEmployee } from "../../redux/employees";
+import { deleteEmployee } from "../../services/employeeMutations";
 import { getAllEmployees } from "../../services/employeeQueries";
 import { employeeTableColumns } from "./config";
 
@@ -24,7 +23,18 @@ const EmployeesList = () => {
 
   const history = useHistory();
   const { setOpen } = useModal();
-  const dispatch = useDispatch();
+
+  const queryClient = useQueryClient();
+
+  // Run delete employee mutation
+  // invalidate employees after delete
+  const mutation = useMutation({
+    mutationFn: id => deleteEmployee(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["employees", ""]);
+      setOpen(false);
+    },
+  });
 
   const handleEdit = employee => {
     history.push(`/edit/${employee.id}`);
@@ -36,8 +46,7 @@ const EmployeesList = () => {
   };
 
   const handleDelete = () => {
-    dispatch(deleteEmployee(employeeId));
-    setOpen(false);
+    mutation.mutate(employeeId);
   };
 
   const handleSearch = e => {
