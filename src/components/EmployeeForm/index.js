@@ -32,7 +32,12 @@ const EmployeeForm = ({ submit, initialValues = {} }) => {
       }}
     >
       <Flex alignItems="center" justifyContent="center" height="100%">
-        <Flex alignItems="left" direction="column" width="300px">
+        <Flex
+          alignItems="left"
+          direction="column"
+          width="100%"
+          style={{ maxWidth: "300px" }}
+        >
           <FormField name="firstName" placeholder="First name" />
           <FormField name="surname" placeholder="Surname" />
           <FormField name="email" placeholder="Email" />
