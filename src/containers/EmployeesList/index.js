@@ -1,14 +1,14 @@
 import { debounce } from "lodash";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import TextField from "../../components/Form/styled/TextField";
 import Modal from "../../components/Modal";
 import { Box, Button, Flex } from "../../components/styled";
 import Table from "../../components/Table";
-import useSearch from "../../hooks/useSearch";
 import { useModal } from "../../providers/modalProvider";
 import { deleteEmployee } from "../../redux/employees";
+import useEmployeeQueries from "../../services/useEmployeeQueries";
 import { employeeTableColumns } from "./config";
 
 /**
@@ -23,12 +23,7 @@ const EmployeesList = () => {
   const { setOpen } = useModal();
   const dispatch = useDispatch();
 
-  const { employeesRecords } = useSelector(({ employees }) => {
-    return employees;
-  });
-
-  const { results: employeesSearchResult, onSearch } =
-    useSearch(employeesRecords);
+  const { data: employeesRecords, setSearch, isPending } = useEmployeeQueries();
 
   const handleEdit = employee => {
     history.push(`/edit/${employee.id}`);
@@ -45,7 +40,7 @@ const EmployeesList = () => {
   };
 
   const handleSearch = e => {
-    onSearch(e.target.value);
+    setSearch(e.target.value);
   };
 
   return (
@@ -55,12 +50,19 @@ const EmployeesList = () => {
         name="search"
         placeholder="Search by Job Title, Firstname, surname, Email, Birth date, Status"
       />
-      <Table
-        columns={employeeTableColumns(handleEdit, handleRemove)}
-        data={employeesSearchResult}
-        pagination
-        defaultSort="desc"
-      />
+      {isPending ? (
+        <Flex paddingTop="lg" paddingBottom="lg" justifyContent="center">
+          Loading employees...
+        </Flex>
+      ) : (
+        <Table
+          columns={employeeTableColumns(handleEdit, handleRemove)}
+          data={employeesRecords}
+          pagination
+          defaultSort="desc"
+        />
+      )}
+
       <Modal title="Confirmation">
         <p>Do you want to delete this employee?</p>
         <Flex justifyContent="flex-end">
