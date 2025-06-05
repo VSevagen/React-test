@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const useSort = data => {
   const [sortedData, setSortedData] = useState(data);
@@ -13,6 +13,10 @@ const useSort = data => {
     });
     setSortedData(dataCopy);
   };
+
+  useEffect(() => {
+    setSortedData(data);
+  }, [data]);
 
   return { onSort, sortedData };
 };

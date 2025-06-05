@@ -2,7 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const defaultEmployee = {
-  id: new Date().getTime(),
+  id: 1,
   firstName: "Abe",
   surname: "Simpson",
   email: "abe.simpson@springfield.com",
@@ -35,16 +35,14 @@ const employeeSlice = createSlice({
     /**
      * Add new employee
      */
-    saveNewEmployee: {
-      prepare: employee => ({
-        payload: { ...employee, id: new Date().getTime() },
-      }),
-      reducer(draftState, action) {
-        draftState.employeesRecords = [
-          ...draftState.employeesRecords,
-          action.payload,
-        ];
-      },
+    saveNewEmployee: (draftState, action) => {
+      draftState.employeesRecords = [
+        ...draftState.employeesRecords,
+        {
+          ...action.payload,
+          id: draftState.employeesRecords.length + 1,
+        },
+      ];
     },
     /**
      * Edit employee,

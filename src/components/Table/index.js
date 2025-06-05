@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Flex } from "../styled";
+import React, { useEffect, useMemo, useState } from "react";
+import { MAX_ITEMS_PER_PAGE } from "../../constants";
+import usePagination from "../../hooks/usePagination";
+import useSort from "../../hooks/useSort";
+import { Box, Button, Flex } from "../styled";
 import SortTable from "./SortTable";
 import TableStyled from "./styled/TableStyled";
 import TableWrap from "./styled/TableWrap";
@@ -52,9 +55,25 @@ import TableWrap from "./styled/TableWrap";
  * @param {Array} data
  * @returns
  */
-const Table = ({ columns, data, onSort }) => {
-  const [sortDirection, setSortDirection] = useState("asc");
+const Table = ({ columns, data, pagination = true, defaultSort = "asc" }) => {
+  const [sortDirection, setSortDirection] = useState(defaultSort);
   const [sortBy, setSortBy] = useState(columns[0].dataIndex);
+
+  const { sortedData, onSort } = useSort(data);
+
+  const {
+    paginatedData,
+    isDisabledNext,
+    isDisabledPrev,
+    onPrevPage,
+    onNextPage,
+  } = usePagination(sortedData, MAX_ITEMS_PER_PAGE);
+
+  // set records
+  const records = useMemo(
+    () => (pagination ? paginatedData : data),
+    [data, pagination, paginatedData]
+  );
 
   const handleSort = column => {
     // Set sort direction
@@ -69,9 +88,9 @@ const Table = ({ columns, data, onSort }) => {
 
   useEffect(() => {
     // Apply default sort
-    onSort(columns[0].dataIndex, "asc");
+    onSort(columns[0].dataIndex, defaultSort);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data]);
 
   return (
     <TableWrap>
@@ -97,8 +116,8 @@ const Table = ({ columns, data, onSort }) => {
           </tr>
         </thead>
         <tbody>
-          {data?.length ? (
-            data?.map((d, index) => (
+          {records?.length ? (
+            records?.map((d, index) => (
               <tr key={`tr-${index}`}>
                 {columns.map((c, cIndex) => (
                   <td key={`td-${cIndex}`}>
@@ -116,6 +135,28 @@ const Table = ({ columns, data, onSort }) => {
           )}
         </tbody>
       </TableStyled>
+      {pagination && data?.length > MAX_ITEMS_PER_PAGE && (
+        <Flex justifyContent="flex-end" marginTop="2rem">
+          <Box>
+            <Button
+              type="button"
+              onClick={onPrevPage}
+              disabled={isDisabledPrev}
+            >
+              &lt;&lt;
+            </Button>
+          </Box>
+          <Box marginLeft="1rem">
+            <Button
+              type="button"
+              onClick={onNextPage}
+              disabled={isDisabledNext}
+            >
+              &gt;&gt;
+            </Button>
+          </Box>
+        </Flex>
+      )}
     </TableWrap>
   );
 };

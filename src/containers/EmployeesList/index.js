@@ -7,7 +7,6 @@ import Modal from "../../components/Modal";
 import { Box, Button, Flex } from "../../components/styled";
 import Table from "../../components/Table";
 import useSearch from "../../hooks/useSearch";
-import useSort from "../../hooks/useSort";
 import { useModal } from "../../providers/modalProvider";
 import { deleteEmployee } from "../../redux/employees";
 import { employeeTableColumns } from "./config";
@@ -30,8 +29,6 @@ const EmployeesList = () => {
 
   const { results: employeesSearchResult, onSearch } =
     useSearch(employeesRecords);
-
-  const { sortedData, onSort } = useSort(employeesSearchResult);
 
   const handleEdit = employee => {
     history.push(`/edit/${employee.id}`);
@@ -60,8 +57,9 @@ const EmployeesList = () => {
       />
       <Table
         columns={employeeTableColumns(handleEdit, handleRemove)}
-        data={sortedData}
-        onSort={onSort}
+        data={employeesSearchResult}
+        pagination
+        defaultSort="desc"
       />
       <Modal title="Confirmation">
         <p>Do you want to delete this employee?</p>

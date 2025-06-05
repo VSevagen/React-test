@@ -16,8 +16,20 @@ const status = {
 
 export const employeeTableColumns = (onEdit, onRemove) => [
   {
+    // This id is used for default sort
+    // If we use jobTitle as default sort (asc), and it seems that the sort is not
+    // working in the first click if the user is already has desc sorting
+    // In real world application, we will use createdAt returned by API to sort the table
+    // but as we don't have API, we will use id
+    dataIndex: "id",
+    title: "#",
+    render(value) {
+      return <span>{value}</span>;
+    },
+  },
+  {
     dataIndex: "jobTitle",
-    title: "Job Title",
+    title: "Job title",
     render(value) {
       return <span>{value}</span>;
     },
@@ -31,7 +43,7 @@ export const employeeTableColumns = (onEdit, onRemove) => [
   },
   {
     dataIndex: "surname",
-    title: "surname",
+    title: "Surname",
     render(value) {
       return <span>{value}</span>;
     },

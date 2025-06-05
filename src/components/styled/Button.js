@@ -19,8 +19,11 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 600;
   white-space: nowrap;
-  :hover {
+  :hover:not(:disabled) {
     opacity: 0.7;
+  }
+  :disabled {
+    cursor: not-allowed;
   }
 
   ${({ link }) =>
