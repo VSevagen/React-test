@@ -8,8 +8,7 @@ const AppWrapper = styled.div`
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-top: 50px;
   margin-inline: 16px;
   padding-inline: 16px;
   @media (min-width: 992px) {
