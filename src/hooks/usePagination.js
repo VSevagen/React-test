@@ -24,10 +24,16 @@ const usePagination = (data, itemsPerPage) => {
     [currentPage, data, itemsPerPage]
   );
 
+  /**
+   * Go to next page
+   */
   const onNextPage = () => {
     setCurrentPage(prev => Math.min(prev + 1, maxPage));
   };
 
+  /**
+   * Go to previous page
+   */
   const onPrevPage = () => {
     setCurrentPage(prev => Math.max(prev - 1, 1));
   };

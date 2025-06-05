@@ -11,6 +11,7 @@ const Create = () => {
 
   const queryClient = useQueryClient();
 
+  // Mutation for creating employee
   const mutation = useMutation({
     mutationFn: employee => addEmployee(employee),
     onSettled: () => {
@@ -21,6 +22,9 @@ const Create = () => {
     },
   });
 
+  /**
+   * Submit our employee data and run the mutation
+   */
   const submitForm = useCallback(
     employee => {
       mutation.mutate(employee);

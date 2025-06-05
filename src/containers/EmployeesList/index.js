@@ -39,23 +39,39 @@ const EmployeesList = () => {
     },
   });
 
+  /**
+   * Handle edit employee
+   * @param {Object} employee
+   */
   const handleEdit = employee => {
     history.push(`/edit/${employee.id}`);
   };
 
+  /**
+   * Handle remove employee
+   * @param {number} id
+   */
   const handleRemove = id => {
     setOpen(true);
     setEmployeeId(id);
   };
 
+  /**
+   * Handle delete employee
+   */
   const handleDelete = () => {
     mutation.mutate(employeeId);
   };
 
+  /**
+   * Handle search
+   * @param {Event} e
+   */
   const handleSearch = e => {
     setSearch(e.target.value ?? "");
   };
 
+  // Query employees
   const { data: employees = [], isPending } = useQuery({
     queryKey: ["employees", search],
     queryFn: () => getAllEmployees(search),

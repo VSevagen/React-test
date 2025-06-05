@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 import EmployeeForm from "../components/EmployeeForm";
 import { Header } from "../components/styled";
@@ -14,11 +14,14 @@ const Edit = () => {
 
   const queryClient = useQueryClient();
 
-  const { data: employee } = useQuery({
+  // We need to fetch the employee
+  // according to the id provided by the user
+  const { data: employee, isPending } = useQuery({
     queryKey: ["employee", params.id],
     queryFn: () => getEmployee(+params.id),
   });
 
+  // Mutation for editing employee
   const mutation = useMutation({
     mutationFn: newEmployee => editEmployee(+params.id, newEmployee),
     onSettled: () => {
@@ -29,12 +32,24 @@ const Edit = () => {
     },
   });
 
+  /**
+   * Submit our employee data and run the mutation
+   */
   const submitForm = useCallback(
     newEmployee => {
       mutation.mutate(newEmployee);
     },
     [mutation]
   );
+
+  useEffect(() => {
+    // If employee is not found && query is not pending
+    // then we redirect to /view
+    // because no employee to be edited
+    if (!employee && !isPending) {
+      history.push("/view");
+    }
+  }, [employee, history, isPending]);
 
   return (
     <>
