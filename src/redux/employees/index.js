@@ -1,7 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 
 const defaultEmployee = {
-  id: new Date().getTime(),
+  id: 1,
   firstName: "Abe",
   surname: "Simpson",
   email: "abe.simpson@springfield.com",
@@ -11,23 +12,25 @@ const defaultEmployee = {
 };
 
 const initialState = {
-  employees_records: [defaultEmployee],
+  employeesRecords: [defaultEmployee],
+  employeeRecord: {},
 };
 
 const employeeSlice = createSlice({
   name: "employees",
   initialState,
   reducers: {
-    saveNewEmployee: {
-      prepare: employee => ({
-        payload: { ...employee, id: new Date().getTime() },
-      }),
-      reducer(draftState, action) {
-        draftState.employees_records = [
-          ...draftState.employees_records,
-          action.payload,
-        ];
-      },
+    /**
+     * Add new employee
+     */
+    saveNewEmployee: (draftState, action) => {
+      draftState.employeesRecords = [
+        ...draftState.employeesRecords,
+        {
+          ...action.payload,
+          id: draftState.employeesRecords.length + 1,
+        },
+      ];
     },
   },
 });

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { margin, padding, state } from "./utils";
 import theme from "./defaultTheme";
+import { margin, padding, state } from "./utils";
 
 const Button = styled.button`
   ${margin};
@@ -19,8 +19,11 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 600;
   white-space: nowrap;
-  :hover {
+  :hover:not(:disabled) {
     opacity: 0.7;
+  }
+  :disabled {
+    cursor: not-allowed;
   }
 
   ${({ link }) =>
@@ -77,9 +80,22 @@ const Button = styled.button`
      background-color: ${theme.buttons.secondaryBackground};
      color: ${theme.buttons.secondaryText};
   `}
+  
+  ${({ danger }) =>
+    danger &&
+    `
+     background-color: ${theme.buttons.danger};
+     color: ${theme.buttons.dangerText};
+  `}
 
   ${({ minWidth }) => minWidth && `min-width: ${minWidth}px;`}
   ${({ autoWidth }) => autoWidth && `min-width: auto!important;`}
+
+  ${({ icon, danger }) =>
+    icon &&
+    `display: flex; background: transparent; color: ${
+      danger ? theme.colors.danger : theme.colors.primary
+    }; min-width: 0; padding: 0`}
 `;
 
 Button.displayName = "StyledButton";
