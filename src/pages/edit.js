@@ -25,10 +25,13 @@ const Edit = () => {
   const mutation = useMutation({
     mutationFn: newEmployee => editEmployee(+params.id, newEmployee),
     onSettled: () => {
-      queryClient.invalidateQueries({
-        predicate: query => query.queryKey[0] === "employees",
-      });
-      history.push("/view");
+      // Wait some ms to invaldiate tags
+      setTimeout(() => {
+        queryClient.invalidateQueries({
+          predicate: query => query.queryKey[0] === "employees",
+        });
+        history.push("/view");
+      }, 100);
     },
   });
 
