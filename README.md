@@ -23,6 +23,9 @@ Your task is to extend the current funcitonality and implement new features and 
 - [node v16](https://nodejs.org/en/download/releases).
 - [`nvm`](https://github.com/nvm-sh/nvm) can help with node versioning.
 
+## Backend service
+- Clone this `https://github.com/radonirinamaminiaina/React-test-backend` and follow instruction
+
 ## Setup
 
 - Clone this repo.

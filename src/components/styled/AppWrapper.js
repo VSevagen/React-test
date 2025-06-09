@@ -2,17 +2,19 @@ import styled from "styled-components";
 import theme from "./defaultTheme";
 
 const AppWrapper = styled.div`
-  margin-left: auto;
-  margin-right: auto;
   padding-top: ${theme.spacings.md};
   padding-bottom: ${theme.spacings.md};
   display: block;
   background-color: #ffffff;
-  width: 600px;
   border-radius: 10px;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-top: 50px;
+  margin-inline: 16px;
+  padding-inline: 16px;
+  @media (min-width: 992px) {
+    max-width: 960px;
+    margin-inline: auto;
+  }
 `;
 
 export default AppWrapper;
